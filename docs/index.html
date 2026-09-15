@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Reel Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F7F6FA; --surface:#FFFFFF; --surface2:#F1EFF6; --line:#E3E0EC; --line2:#CFCADC;
+  --ink:#16141D; --ink2:#55506A; --ink3:#857FA0;
+  --accent:#6D46C8; --accent-soft:#EDE7FA;
+  --ok:#0F7A54; --ok-soft:#DFF3EA; --warn:#8A5A00; --warn-soft:#FBEFD6; --err:#B4302A; --err-soft:#FBE4E2;
+  --shadow:0 1px 2px rgba(22,20,29,.05), 0 8px 24px rgba(22,20,29,.05);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#100F16; --surface:#191822; --surface2:#201E2B; --line:#2B2937; --line2:#3B3850;
+  --ink:#ECEAF3; --ink2:#A9A3C0; --ink3:#7C769A;
+  --accent:#A98BF0; --accent-soft:#251F38;
+  --ok:#5ED2A4; --ok-soft:#12291F; --warn:#E8B45C; --warn-soft:#2C2313; --err:#F08079; --err-soft:#2E1817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --bg:#100F16; --surface:#191822; --surface2:#201E2B; --line:#2B2937; --line2:#3B3850;
+  --ink:#ECEAF3; --ink2:#A9A3C0; --ink3:#7C769A;
+  --accent:#A98BF0; --accent-soft:#251F38;
+  --ok:#5ED2A4; --ok-soft:#12291F; --warn:#E8B45C; --warn-soft:#2C2313; --err:#F08079; --err-soft:#2E1817;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:22px 18px 64px;display:flex;flex-direction:column;gap:18px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+h1{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
+h2{font-size:12px;font-weight:600;margin:0;color:var(--ink3);text-transform:uppercase;letter-spacing:.09em;
+  font-family:"IBM Plex Mono",monospace}
+
+header{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header .sub{color:var(--ink3);font-size:13px}
+.spacer{flex:1}
+button{font:inherit;font-size:13px;font-weight:500;color:var(--ink2);background:var(--surface);
+  border:1px solid var(--line2);border-radius:9px;padding:7px 13px;cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* the one thing that must read at a glance */
+.banner{display:flex;align-items:center;gap:14px;padding:18px 20px;border-radius:14px;
+  background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
+  border-left:5px solid var(--ok)}
+.banner.warn{border-left-color:var(--warn)} .banner.err{border-left-color:var(--err)}
+.banner .dot{width:11px;height:11px;border-radius:50%;background:var(--ok);flex:0 0 auto;
+  box-shadow:0 0 0 4px var(--ok-soft)}
+.banner.warn .dot{background:var(--warn);box-shadow:0 0 0 4px var(--warn-soft)}
+.banner.err .dot{background:var(--err);box-shadow:0 0 0 4px var(--err-soft)}
+.banner .t{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.banner .d{color:var(--ink2);font-size:13.5px;margin-top:1px}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+.tile .k{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;
+  font-family:"IBM Plex Mono",monospace}
+.tile .v{font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:5px;line-height:1.1}
+.tile .v small{font-size:15px;color:var(--ink3);font-weight:500}
+.tile .n{font-size:12px;color:var(--ink3);margin-top:3px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);overflow:hidden}
+.card>.hd{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.card>.bd{padding:16px 18px}
+
+.rows{display:flex;flex-direction:column}
+.row{display:flex;align-items:baseline;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .lbl{color:var(--ink3);font-size:12.5px;width:104px;flex:0 0 auto;
+  font-family:"IBM Plex Mono",monospace}
+.row .val{flex:1;min-width:0}
+
+.issue{display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line)}
+.issue:last-child{border-bottom:0}
+.issue .bar{width:4px;border-radius:2px;flex:0 0 auto;background:var(--warn)}
+.issue.error .bar{background:var(--err)} .issue.info .bar{background:var(--accent)}
+.issue .t{font-weight:600;font-size:14.5px}
+.issue .d{color:var(--ink2);font-size:13px;margin-top:2px}
+.allclear{padding:18px;display:flex;gap:11px;align-items:center;color:var(--ink2);font-size:14px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;
+  font-weight:600;padding:9px 10px;font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+td{padding:10px;border-top:1px solid var(--line);vertical-align:middle}
+tbody tr:hover{background:var(--surface2)}
+td.n{color:var(--ink3);width:38px}
+td.kw{font-weight:600;white-space:nowrap}
+td.tt{color:var(--ink2)}
+td.when{color:var(--ink3);white-space:nowrap}
+.scroll{overflow-x:auto}
+
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;
+  padding:2.5px 8px;border-radius:999px;white-space:nowrap;font-family:"IBM Plex Mono",monospace}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.err{background:var(--err-soft);color:var(--err)}
+.pill.mut{background:var(--surface2);color:var(--ink3)}
+.pill.acc{background:var(--accent-soft);color:var(--accent)}
+
+footer{color:var(--ink3);font-size:12px;text-align:center;padding-top:6px}
+.stale{color:var(--err);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <h1>Reel Pipeline</h1>
+      <div class="sub">Startup Idea series · health monitor</div>
+    </div>
+    <div class="spacer"></div>
+    <div class="sub mono" id="age">loading…</div>
+    <button id="refresh" type="button">Refresh</button>
+  </header>
+
+  <div class="banner" id="banner">
+    <div class="dot"></div>
+    <div>
+      <div class="t" id="banner-t">Loading…</div>
+      <div class="d" id="banner-d">Fetching the latest pipeline status.</div>
+    </div>
+  </div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="card">
+    <div class="hd"><h2>Right now</h2></div>
+    <div class="rows" id="now"></div>
+  </div>
+
+  <div class="card">
+    <div class="hd"><h2>Issues</h2><span class="spacer"></span><span id="issue-count" class="pill mut">—</span></div>
+    <div id="issues"></div>
+  </div>
+
+  <div class="card">
+    <div class="hd"><h2>Reels</h2><span class="spacer"></span><span id="reel-count" class="pill mut">—</span></div>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>Keyword</th><th>Idea</th><th>Posted</th><th>Status</th></tr></thead>
+      <tbody id="reels"></tbody>
+    </table></div>
+  </div>
+
+  <footer id="foot">—</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function ago(iso){
+  if(!iso) return "unknown";
+  const m = Math.round((Date.now() - new Date(iso).getTime())/60000);
+  if(m < 1) return "just now";
+  if(m < 60) return m + " min ago";
+  const h = Math.floor(m/60);
+  if(h < 24) return h + "h ago";
+  return Math.floor(h/24) + "d ago";
+}
+function when(iso){
+  if(!iso) return "—";
+  const d = new Date(iso);
+  const day = d.toLocaleDateString(undefined,{day:"numeric",month:"short"});
+  return day + " " + d.toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit",hour12:false});
+}
+function tile(k,v,n){
+  return `<div class="tile"><div class="k">${esc(k)}</div><div class="v mono">${v}</div>
+          <div class="n">${esc(n||"")}</div></div>`;
+}
+function row(lbl,val){ return `<div class="row"><div class="lbl">${esc(lbl)}</div><div class="val">${val}</div></div>`; }
+
+function render(d){
+  const s = d.summary, c = d.comments || {};
+  const errs = (d.issues||[]).filter(i=>i.level==="error").length;
+  const warns = (d.issues||[]).filter(i=>i.level==="warn").length;
+
+  // Data freshness is itself the first health signal: if the publisher stopped, everything
+  // below is a snapshot of the past and must not be read as "now".
+  const ageMin = Math.round((Date.now() - new Date(d.generated_at).getTime())/60000);
+  const stale = ageMin > 45;
+  $("age").innerHTML = stale
+    ? `<span class="stale">data ${ago(d.generated_at)}</span>`
+    : `updated ${ago(d.generated_at)}`;
+
+  const lvl = (errs || stale) ? "err" : warns ? "warn" : "ok";
+  $("banner").className = "banner " + lvl;
+  $("banner-t").textContent = stale ? "Status is stale"
+    : errs ? `${errs} thing${errs>1?"s":""} need${errs>1?"":"s"} attention`
+    : warns ? `${warns} warning${warns>1?"s":""}` : "Everything is running";
+  const top = (d.issues||[]).find(i=>i.level==="error") || (d.issues||[]).find(i=>i.level==="warn");
+  $("banner-d").textContent = stale
+    ? `Last updated ${ago(d.generated_at)}. The Mac may be asleep or the publisher stopped — the numbers below are from then, not now.`
+    : top ? top.title : s.gate;
+
+  $("tiles").innerHTML =
+    tile("Reels built", s.built, `${s.posted} posted`) +
+    tile("Today", `${s.today}<small>/${s.cap}</small>`, "daily cap") +
+    tile("Hooks ready", s.hooks_approved, "approved, waiting") +
+    tile("Comments queued", c.backlog ?? "—",
+         c.clears_in_h ? `clears in ~${c.clears_in_h}h` : "awaiting a reply");
+
+  const last = d.last_reel;
+  $("now").innerHTML =
+    row("Posting", `${esc(s.gate)}`) +
+    row("Next build", s.next_build_at
+        ? `${when(s.next_build_at)} <span class="pill mut">auto</span>`
+        : "—") +
+    row("Last reel", last
+        ? `<strong>#${String(last.n).padStart(2,"0")} ${esc(last.keyword)}</strong> — ${esc(last.title)}
+           <span class="pill ok">posted ${esc(when(last.posted_at))}</span>`
+        : "none yet") +
+    row("Comments", `${c.replied ?? 0} answered · ${c.backlog ?? "—"} waiting` +
+        (c.hours_to_expiry ? ` <span class="pill ${c.clears_in_h && c.clears_in_h > c.hours_to_expiry ? "err":"mut"}">oldest expires in ${c.hours_to_expiry}h</span>` : "")) +
+    row("Answering", `${s.answering_comments} of ${s.built} reels can send their plan`);
+
+  const iss = d.issues || [];
+  $("issue-count").textContent = iss.length ? `${iss.length}` : "all clear";
+  $("issue-count").className = "pill " + (errs ? "err" : warns ? "warn" : "ok");
+  $("issues").innerHTML = iss.length
+    ? iss.map(i => `<div class="issue ${esc(i.level)}"><div class="bar"></div>
+        <div><div class="t">${esc(i.title)}</div><div class="d">${esc(i.detail)}</div></div></div>`).join("")
+    : `<div class="allclear">Nothing needs you. Builds, posting and comment replies are all running.</div>`;
+
+  const reels = d.reels || [];
+  $("reel-count").textContent = `${reels.length}`;
+  $("reels").innerHTML = reels.map(r => {
+    const pills = [];
+    if(r.posted_raw) pills.push(`<span class="pill ok">live</span>`);
+    else if(r.queued) pills.push(`<span class="pill acc">queued</span>`);
+    else pills.push(`<span class="pill mut">built</span>`);
+    if(r.held) pills.push(`<span class="pill err">held</span>`);
+    if(r.posted_raw && !r.can_answer_comments) pills.push(`<span class="pill err">no DMs</span>`);
+    return `<tr>
+      <td class="n mono">${String(r.n).padStart(2,"0")}</td>
+      <td class="kw">${esc(r.keyword)}</td>
+      <td class="tt">${esc(r.title)}</td>
+      <td class="when mono">${r.posted_at ? esc(when(r.posted_at)) : "—"}</td>
+      <td>${pills.join(" ")}</td></tr>`;
+  }).join("");
+
+  $("foot").textContent = `Generated ${when(d.generated_at)} · refreshes itself every minute`;
+}
+
+async function load(){
+  try{
+    const r = await fetch("status.json?t=" + Date.now(), {cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    render(await r.json());
+  }catch(e){
+    $("banner").className = "banner err";
+    $("banner-t").textContent = "Cannot read the status file";
+    $("banner-d").textContent = e.message + " — status.json may not have been published yet.";
+    $("age").textContent = "";
+  }
+}
+$("refresh").addEventListener("click", load);
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>
