@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T03:30:00",
+ "generated_at": "2026-09-16T03:30:55",
  "summary": {
   "built": 16,
   "posted": 16,
@@ -9,7 +9,7 @@
   "answering_comments": 16,
   "next_build_at": "2026-09-16T06:40",
   "gate": "Nothing queued — the next build will queue one",
-  "healthy": false
+  "healthy": true
  },
  "last_reel": {
   "n": 16,
@@ -258,13 +258,13 @@
   "hours_to_expiry": 76,
   "clears_in_h": 42,
   "counted_at": "2026-09-16T03:30:34",
-  "last_run": "2026-09-16T03:00:46",
+  "last_run": "2026-09-16T03:30:40",
   "per_reel": [
    {
     "n": 2,
     "keyword": "REVIEWS",
     "comments": 463,
-    "waiting": 122
+    "waiting": 118
    },
    {
     "n": 1,
@@ -276,14 +276,14 @@
  },
  "issues": [
   {
-   "level": "error",
-   "title": "The dashboard publisher failed 31 of its recent runs",
+   "level": "warn",
+   "title": "The dashboard publisher failed 1 of its recent runs",
    "detail": "This page only looks current when the publisher can push. Check /tmp/reel-dashboard.log — a keyring-bound git credential is the usual cause, and cron cannot reach the keyring."
   },
   {
-   "level": "error",
-   "title": "Only 4 GB disk free",
-   "detail": "A render needs ~1.5 GB plus ~230 MB of temp per stills pass."
+   "level": "warn",
+   "title": "4 GB disk free",
+   "detail": "A render needs ~1.5 GB plus ~230 MB of temp per stills pass. Downloads and Documents are the usual weight."
   }
  ]
 }
