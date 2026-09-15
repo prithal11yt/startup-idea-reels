@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T03:26:38",
+ "generated_at": "2026-09-16T03:30:19",
  "summary": {
   "built": 16,
   "posted": 16,
@@ -21,7 +21,7 @@
   "avatar": "Prithal (original)",
   "can_answer_comments": true,
   "has_caption": true,
-  "has_video": true,
+  "has_video": false,
   "queued": true,
   "held": false
  },
@@ -36,7 +36,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": true,
    "held": false
   },
@@ -50,7 +50,7 @@
    "avatar": "Prithal (second look)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -64,7 +64,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -78,7 +78,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -92,7 +92,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -106,7 +106,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -120,7 +120,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -134,7 +134,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -148,7 +148,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -162,7 +162,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -176,7 +176,7 @@
    "avatar": "Prithal (original)",
    "can_answer_comments": true,
    "has_caption": true,
-   "has_video": true,
+   "has_video": false,
    "queued": false,
    "held": false
   },
@@ -252,7 +252,7 @@
   }
  ],
  "comments": {
-  "replied": 346,
+  "replied": 347,
   "backlog": 336,
   "oldest_expires": "19 Sep 01:45",
   "hours_to_expiry": 76,
@@ -277,7 +277,12 @@
  "issues": [
   {
    "level": "error",
-   "title": "Only 3 GB disk free",
+   "title": "The dashboard publisher failed 31 of its recent runs",
+   "detail": "This page only looks current when the publisher can push. Check /tmp/reel-dashboard.log — a keyring-bound git credential is the usual cause, and cron cannot reach the keyring."
+  },
+  {
+   "level": "error",
+   "title": "Only 4 GB disk free",
    "detail": "A render needs ~1.5 GB plus ~230 MB of temp per stills pass."
   }
  ]
