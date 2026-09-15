@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T03:30:55",
+ "generated_at": "2026-09-16T03:31:53",
  "summary": {
   "built": 16,
   "posted": 16,
@@ -275,11 +275,6 @@
   ]
  },
  "issues": [
-  {
-   "level": "warn",
-   "title": "The dashboard publisher failed 1 of its recent runs",
-   "detail": "This page only looks current when the publisher can push. Check /tmp/reel-dashboard.log — a keyring-bound git credential is the usual cause, and cron cannot reach the keyring."
-  },
   {
    "level": "warn",
    "title": "4 GB disk free",
