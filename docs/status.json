@@ -1,15 +1,15 @@
 {
- "generated_at": "2026-09-15T19:40:32",
+ "generated_at": "2026-09-16T03:26:38",
  "summary": {
   "built": 16,
   "posted": 16,
-  "today": 3,
+  "today": 0,
   "cap": 3,
   "hooks_approved": 70,
   "answering_comments": 16,
   "next_build_at": "2026-09-16T06:40",
-  "gate": "Daily cap reached — 3 of 3 posted today",
-  "healthy": true
+  "gate": "Nothing queued — the next build will queue one",
+  "healthy": false
  },
  "last_reel": {
   "n": 16,
@@ -252,19 +252,19 @@
   }
  ],
  "comments": {
-  "replied": 286,
-  "backlog": 370,
+  "replied": 346,
+  "backlog": 336,
   "oldest_expires": "19 Sep 01:45",
-  "hours_to_expiry": 84,
-  "clears_in_h": 46,
-  "counted_at": "2026-09-15T19:34:15",
-  "last_run": "2026-09-15T19:30:47",
+  "hours_to_expiry": 76,
+  "clears_in_h": 42,
+  "counted_at": "2026-09-16T03:15:32",
+  "last_run": "2026-09-16T03:00:46",
   "per_reel": [
    {
     "n": 2,
     "keyword": "REVIEWS",
-    "comments": 451,
-    "waiting": 170
+    "comments": 463,
+    "waiting": 122
    },
    {
     "n": 1,
@@ -276,8 +276,8 @@
  },
  "issues": [
   {
-   "level": "warn",
-   "title": "Only 7 GB disk free",
+   "level": "error",
+   "title": "Only 3 GB disk free",
    "detail": "A render needs ~1.5 GB plus ~230 MB of temp per stills pass."
   }
  ]
