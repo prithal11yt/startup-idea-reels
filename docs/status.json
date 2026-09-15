@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T03:30:19",
+ "generated_at": "2026-09-16T03:30:00",
  "summary": {
   "built": 16,
   "posted": 16,
@@ -252,12 +252,12 @@
   }
  ],
  "comments": {
-  "replied": 347,
+  "replied": 350,
   "backlog": 336,
   "oldest_expires": "19 Sep 01:45",
   "hours_to_expiry": 76,
   "clears_in_h": 42,
-  "counted_at": "2026-09-16T03:15:32",
+  "counted_at": "2026-09-16T03:30:34",
   "last_run": "2026-09-16T03:00:46",
   "per_reel": [
    {
