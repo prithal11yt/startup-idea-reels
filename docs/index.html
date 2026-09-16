@@ -147,7 +147,21 @@ button:disabled{opacity:.6;cursor:default}
 </div>
 
 <script>
+const PAGE_VERSION = "3";
 const $ = id => document.getElementById(id);
+
+function checkVersion(feedVersion){
+  if(!feedVersion || String(feedVersion) === PAGE_VERSION) return false;
+  // one attempt only — a reload loop would be far worse than a stale page
+  if(sessionStorage.getItem("reloadedFor") === String(feedVersion)){
+    $("banner-d").textContent = "This page is an old cached copy. Pull down to refresh, "
+      + "or open the link again with ?v=" + feedVersion + " on the end.";
+    return false;
+  }
+  try{ sessionStorage.setItem("reloadedFor", String(feedVersion)); }catch(e){}
+  location.replace(location.pathname + "?v=" + feedVersion);
+  return true;
+}
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function ago(iso){
@@ -172,6 +186,7 @@ function tile(k,v,n){
 function row(lbl,val){ return `<div class="row"><div class="lbl">${esc(lbl)}</div><div class="val">${val}</div></div>`; }
 
 function render(d){
+  if(checkVersion(d.page_version)) return;
   lastStamp = d.generated_at;
   const s = d.summary, c = d.comments || {};
   const errs = (d.issues||[]).filter(i=>i.level==="error").length;
