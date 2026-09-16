@@ -97,6 +97,8 @@ td.when{color:var(--ink3);white-space:nowrap}
 
 footer{color:var(--ink3);font-size:12px;text-align:center;padding-top:6px}
 .stale{color:var(--err);font-weight:600}
+#age[data-flash="new"]{color:var(--ok);font-weight:600}
+button:disabled{opacity:.6;cursor:default}
 </style>
 </head>
 <body>
@@ -169,6 +171,7 @@ function tile(k,v,n){
 function row(lbl,val){ return `<div class="row"><div class="lbl">${esc(lbl)}</div><div class="val">${val}</div></div>`; }
 
 function render(d){
+  lastStamp = d.generated_at;
   const s = d.summary, c = d.comments || {};
   const errs = (d.issues||[]).filter(i=>i.level==="error").length;
   const warns = (d.issues||[]).filter(i=>i.level==="warn").length;
@@ -242,7 +245,10 @@ function render(d){
 
 async function load(){
   try{
-    const r = await fetch("status.json?t=" + Date.now(), {cache:"no-store"});
+    const FEED = "https://gist.githubusercontent.com/prithal11yt/94448adcdcd3a6ae8066a8755637a164/raw/status.json";
+    // status.json on Pages is the fallback for when the gist cannot be reached
+    let r = await fetch(FEED + "?t=" + Date.now(), {cache:"no-store"})
+              .catch(() => fetch("status.json?t=" + Date.now(), {cache:"no-store"}));
     if(!r.ok) throw new Error("HTTP " + r.status);
     render(await r.json());
   }catch(e){
@@ -252,7 +258,24 @@ async function load(){
     $("age").textContent = "";
   }
 }
-$("refresh").addEventListener("click", load);
+let lastStamp = null;
+async function manualRefresh(){
+  const btn = $("refresh");
+  btn.disabled = true; btn.textContent = "Checking…";
+  const before = lastStamp;
+  await load();
+  btn.disabled = false; btn.textContent = "Refresh";
+  const el = $("age");
+  if(lastStamp && lastStamp !== before){
+    el.dataset.flash = "new";
+    setTimeout(() => delete el.dataset.flash, 1500);
+  }else{
+    const keep = el.textContent;
+    el.textContent = "no new data yet";
+    setTimeout(() => { if(el.textContent === "no new data yet") el.textContent = keep; }, 2000);
+  }
+}
+$("refresh").addEventListener("click", manualRefresh);
 load();
 setInterval(load, 60000);
 </script>

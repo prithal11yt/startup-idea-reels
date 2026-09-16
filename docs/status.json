@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T07:30:01",
+ "generated_at": "2026-09-16T07:32:56",
  "summary": {
   "built": 17,
   "posted": 16,
@@ -266,25 +266,25 @@
   }
  ],
  "comments": {
-  "replied": 382,
+  "replied": 383,
   "backlog": 309,
   "oldest_expires": "19 Sep 01:45",
   "hours_to_expiry": 72,
   "clears_in_h": 39,
   "counted_at": "2026-09-16T07:30:48",
-  "last_run": "2026-09-16T07:00:49",
+  "last_run": "2026-09-16T07:30:59",
   "per_reel": [
    {
     "n": 2,
     "keyword": "REVIEWS",
     "comments": 467,
-    "waiting": 93
+    "waiting": 89
    },
    {
     "n": 1,
     "keyword": "LANDLORD",
-    "comments": 79,
-    "waiting": 0
+    "comments": 80,
+    "waiting": 1
    }
   ]
  },
