@@ -97,7 +97,8 @@ td.when{color:var(--ink3);white-space:nowrap}
 
 footer{color:var(--ink3);font-size:12px;text-align:center;padding-top:6px}
 .stale{color:var(--err);font-weight:600}
-#age[data-flash="new"]{color:var(--ok);font-weight:600}
+.note{margin-left:9px;font-size:12px;font-weight:600;font-family:"IBM Plex Mono",monospace}
+.note.new{color:var(--ok)} .note.same{color:var(--ink3)}
 button:disabled{opacity:.6;cursor:default}
 </style>
 </head>
@@ -180,9 +181,8 @@ function render(d){
   // below is a snapshot of the past and must not be read as "now".
   const ageMin = Math.round((Date.now() - new Date(d.generated_at).getTime())/60000);
   const stale = ageMin > 45;
-  $("age").innerHTML = stale
-    ? `<span class="stale">data ${ago(d.generated_at)}</span>`
-    : `updated ${ago(d.generated_at)}`;
+  lastChecked = Date.now();
+  paintAge();
 
   const lvl = (errs || stale) ? "err" : warns ? "warn" : "ok";
   $("banner").className = "banner " + lvl;
@@ -258,7 +258,20 @@ async function load(){
     $("age").textContent = "";
   }
 }
-let lastStamp = null;
+let lastStamp = null, lastChecked = null, lastStale = false;
+
+function paintAge(){
+  if(!lastStamp) return;
+  const el = $("age");
+  const dataAge = ago(lastStamp);
+  const checked = lastChecked ? ago(new Date(lastChecked).toISOString()) : "—";
+  lastStale = (Date.now() - new Date(lastStamp).getTime())/60000 > 45;
+  el.innerHTML = lastStale
+    ? `<span class="stale">data ${dataAge}</span> · checked ${checked}`
+    : `data ${dataAge} · checked ${checked}`;
+}
+// the clock keeps moving even when the data does not, so the page never looks frozen
+setInterval(paintAge, 10000);
 async function manualRefresh(){
   const btn = $("refresh");
   btn.disabled = true; btn.textContent = "Checking…";
@@ -266,14 +279,14 @@ async function manualRefresh(){
   await load();
   btn.disabled = false; btn.textContent = "Refresh";
   const el = $("age");
-  if(lastStamp && lastStamp !== before){
-    el.dataset.flash = "new";
-    setTimeout(() => delete el.dataset.flash, 1500);
-  }else{
-    const keep = el.textContent;
-    el.textContent = "no new data yet";
-    setTimeout(() => { if(el.textContent === "no new data yet") el.textContent = keep; }, 2000);
-  }
+  // say plainly which of the two things happened — new numbers, or the same numbers re-checked
+  const note = document.createElement("span");
+  note.className = "note " + (lastStamp && lastStamp !== before ? "new" : "same");
+  note.textContent = lastStamp && lastStamp !== before
+    ? "new numbers"
+    : "already up to date";
+  el.after(note);
+  setTimeout(() => note.remove(), 2600);
 }
 $("refresh").addEventListener("click", manualRefresh);
 load();
