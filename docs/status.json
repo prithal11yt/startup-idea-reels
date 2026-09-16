@@ -1,25 +1,27 @@
 {
- "generated_at": "2026-09-16T17:16:23",
- "page_version": "3",
+ "generated_at": "2026-09-17T05:17:10",
+ "page_version": "4",
  "summary": {
-  "built": 19,
-  "posted": 17,
-  "today": 1,
+  "built": 20,
+  "posted": 19,
+  "buffer": 1,
+  "buffer_max": 15,
+  "today": 0,
   "cap": 3,
-  "hooks_approved": 67,
-  "answering_comments": 17,
-  "next_build_at": "2026-09-16T17:40",
-  "gate": "Reel #18 SAFE goes out at 17:20",
+  "hooks_approved": 66,
+  "answering_comments": 19,
+  "next_build_at": "2026-09-17T06:40",
+  "gate": "Reel #18 SAFE goes out at 05:20",
   "healthy": true
  },
  "last_reel": {
-  "n": 17,
-  "keyword": "CANCEL",
-  "title": "Subscription Cancellation Saa",
-  "posted_at": "2026-09-16T07:40",
-  "posted_raw": "2026-09-16T07:40:01",
-  "hook_shape": "already-works-elsewhere",
-  "avatar": "Prithal (second look)",
+  "n": 20,
+  "keyword": "LINKS",
+  "title": "Link Scanner Saas",
+  "posted_at": "2026-09-16T18:40",
+  "posted_raw": "2026-09-16T18:40:00",
+  "hook_shape": "price-gap",
+  "avatar": "Prithal (original)",
   "can_answer_comments": true,
   "has_caption": true,
   "has_video": true,
@@ -28,14 +30,28 @@
  },
  "reels": [
   {
+   "n": 20,
+   "keyword": "LINKS",
+   "title": "Link Scanner Saas",
+   "posted_at": "2026-09-16T18:40",
+   "posted_raw": "2026-09-16T18:40:00",
+   "hook_shape": "price-gap",
+   "avatar": "Prithal (original)",
+   "can_answer_comments": true,
+   "has_caption": true,
+   "has_video": true,
+   "queued": true,
+   "held": false
+  },
+  {
    "n": 19,
    "keyword": "NAME",
    "title": "Business Name Generator SaaS",
-   "posted_at": null,
-   "posted_raw": null,
+   "posted_at": "2026-09-16T18:00",
+   "posted_raw": "2026-09-16T18:00:00",
    "hook_shape": "everyday-behaviour",
    "avatar": "Prithal (second look)",
-   "can_answer_comments": false,
+   "can_answer_comments": true,
    "has_caption": true,
    "has_video": true,
    "queued": true,
@@ -295,24 +311,30 @@
   }
  ],
  "comments": {
-  "replied": 449,
-  "backlog": 284,
+  "replied": 549,
+  "backlog": 228,
   "oldest_expires": "19 Sep 01:45",
-  "hours_to_expiry": 62,
-  "clears_in_h": 36,
-  "counted_at": "2026-09-16T17:07:11",
-  "last_run": "2026-09-16T16:30:54",
+  "hours_to_expiry": 50,
+  "clears_in_h": 28,
+  "counted_at": "2026-09-17T05:11:00",
+  "last_run": "2026-09-17T05:00:42",
   "per_reel": [
+   {
+    "n": 3,
+    "keyword": "LAND",
+    "comments": 44,
+    "waiting": 9
+   },
    {
     "n": 2,
     "keyword": "REVIEWS",
-    "comments": 490,
-    "waiting": 57
+    "comments": 504,
+    "waiting": 1
    },
    {
     "n": 1,
     "keyword": "LANDLORD",
-    "comments": 86,
+    "comments": 90,
     "waiting": 0
    }
   ]

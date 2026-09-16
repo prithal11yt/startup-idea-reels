@@ -47,7 +47,8 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .banner .t{font-size:17px;font-weight:600;letter-spacing:-.01em}
 .banner .d{color:var(--ink2);font-size:13.5px;margin-top:1px}
 
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:860px){.tiles{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
 .tile .k{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;
@@ -147,7 +148,7 @@ button:disabled{opacity:.6;cursor:default}
 </div>
 
 <script>
-const PAGE_VERSION = "3";
+const PAGE_VERSION = "4";
 const $ = id => document.getElementById(id);
 
 function checkVersion(feedVersion){
@@ -212,7 +213,9 @@ function render(d){
   $("tiles").innerHTML =
     tile("Reels built", s.built, `${s.posted} posted`) +
     tile("Today", `${s.today}<small>/${s.cap}</small>`, "daily cap") +
-    tile("Hooks ready", s.hooks_approved, "approved, waiting") +
+    tile("Built ahead", (s.buffer ?? 0) + "<small>/" + (s.buffer_max ?? 15) + "</small>",
+         "ready to post") +
+    tile("Hooks ready", s.hooks_approved, "approved") +
     tile("Comments queued", c.backlog ?? "—",
          c.clears_in_h ? `clears in ~${c.clears_in_h}h` : "awaiting a reply");
 
