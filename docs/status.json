@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T06:00:01",
+ "generated_at": "2026-09-16T06:15:00",
  "summary": {
   "built": 16,
   "posted": 16,
@@ -252,19 +252,19 @@
   }
  ],
  "comments": {
-  "replied": 369,
-  "backlog": 317,
+  "replied": 370,
+  "backlog": 313,
   "oldest_expires": "19 Sep 01:45",
   "hours_to_expiry": 73,
-  "clears_in_h": 40,
-  "counted_at": "2026-09-16T06:00:38",
-  "last_run": "2026-09-16T05:30:49",
+  "clears_in_h": 39,
+  "counted_at": "2026-09-16T06:15:33",
+  "last_run": "2026-09-16T06:00:44",
   "per_reel": [
    {
     "n": 2,
     "keyword": "REVIEWS",
     "comments": 464,
-    "waiting": 103
+    "waiting": 99
    },
    {
     "n": 1,
@@ -277,7 +277,7 @@
  "issues": [
   {
    "level": "error",
-   "title": "2 GB disk free — builds will start failing",
+   "title": "1 GB disk free — builds will start failing",
    "detail": "A render needs ~1.5 GB plus ~230 MB of temp per stills pass. Downloads and Documents are the usual weight."
   }
  ]
